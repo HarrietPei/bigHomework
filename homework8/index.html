@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>酷狗播放器</title>
+    <style>
+        a{
+            text-decoration: none;
+        }
+        .nav{
+            background-color: #181818;
+            height: 50px;
+            line-height: 50px;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: row;
+        }
+        .nav div:nth-child(1) img{
+            margin-left: 50px;
+        }
+        .left-nav{
+            display: inline-block;
+            margin-left: 39px;
+        }
+        .left-nav a,
+        .right-nav a,
+        .more a{
+            color: azure;
+            font-size: 14px;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .left-nav a{
+            width: 100px;
+            text-align: center;
+            margin-right:39px;
+            margin-left: 0;
+        }
+        .mid-nav{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            line-height: 50px;
+        }
+        .mid-nav div:nth-child(1){
+            margin-left: 5px;
+        }
+        .mid-nav div{
+            display: flex;
+            flex-direction: row;
+            margin: 0 10px;
+            flex-wrap: nowrap;
+        }
+        .mid-nav div a{
+            color: rgba(209, 209, 193, 0.562);
+            font-size: 10px;
+            width: 48px;
+            text-decoration: none;
+        }
+        .mid-nav div:nth-child(1) .star,
+        .mid-nav div:nth-child(2) .star,
+        .mid-nav div:nth-child(3) .star,
+        .mid-nav div:nth-child(4) .star{
+            background: url(./images/icon.png) no-repeat -231px -26px;
+            height: 15px;
+            width: 17px;
+            margin: 17px auto;
+        }
+        .right-nav{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .right-nav a{
+            font-size: 9px;
+            width: 48px;
+        }
+        /* .more{
+            width: 5px;
+            display: inline-block;
+        } */
+        .more a{
+            font-size: 5px;
+            margin-right: 2px;
+        }
+        .search{
+            width: 210px;
+            display: flex;
+            flex-direction: row;
+        }
+        .search img{
+            margin: 12px;
+        }
+        .box{
+            display: flex;
+            flex-direction: row;
+            margin-left: 70px;
+            height: 900px;
+        }
+        .left-box{
+            width: 800px;
+        }
+        .name-top{
+            width: 300px;
+            padding: 50px 250px 10px 250px;
+            border-bottom: 1px solid #ebe0e0;
+        }
+        .name-top div:nth-child(2),
+        .name-top div:nth-child(3),
+        .name-top div:nth-child(4),
+        .name-top div:nth-child(5){
+            display: inline-block;
+            margin-right: 7px;
+        }
+        .name-top div:nth-child(2) a,
+        .name-top div:nth-child(3) a,
+        .name-top div:nth-child(5) a,
+        .lyric-box div:nth-child(6){
+            color: #e3ba6f;
+        }
+        .name-top div:nth-child(2) span,
+        .name-top div:nth-child(3) span,
+        .name-top div:nth-child(6) span,
+        .name-top div a{
+            text-align: center;
+            font-size: 11px;
+        }
+        .song-name{
+            margin-bottom: 40px;
+        }
+        .song-name span{
+            font-size: 25px;
+            padding: 0 105px;
+        }
+        .right-box{
+            width: 400px;
+        }
+        .lyric-box{
+            padding:0 175px;
+            height: 400px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .lyric-box::-webkit-scrollbar{
+            width: 8px;
+            background-color: thistle;
+        }
+        .lyric-box::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            height: 2px;
+            box-shadow: inset 0 0 5px rgba(71, 67, 67, 0.2);
+            background: rgba(155, 143, 143, 0.486);
+        }
+        .lyric-box::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px #ffffff;
+            border-radius: 0px ;
+            background:#ffffff;
+        }
+        .lyric-box div{
+            text-align:center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .lyric-box div:nth-child(6){
+            font-size: 17px;
+        }
+        .right-box{
+            width: 500px;
+        }
+        @keyframes record {
+            0%{
+                transform: rotate(0deg);
+            }
+            20%{
+                transform: rotate(72deg);
+            }
+            40%{
+                transform: rotate(144deg);
+            }
+            60%{
+                transform: rotate(216deg);
+            }
+            80%{
+                transform: rotate(288deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+        .cover-img{
+            width: 500px;
+            height: 430px;
+        }
+        #yang{
+            border-radius: 50%;
+            margin-left: 100px;
+            margin-top: 50px;
+            width: 343px;
+            height: 343px;
+            z-index: 4;
+            display: inline-block;
+            background: url(./images/cover.jpg) no-repeat center;
+            background-size: contain;
+        }
+        .centerDot{
+            width: 15px;
+            height: 15px;
+            margin-left: 258px;
+            margin-top: 208px;
+            position: absolute;
+            display: inline-block;
+            z-index: 3;
+            border:1px solid #dcdddf;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .centerCircle{
+            width: 50px;
+            height: 50px;
+            margin-left: 240px;
+            margin-top: 190px;
+            position: absolute;
+            display: inline-block;
+            z-index: 2;
+            background-color: rgba(248, 233, 233, 0.486);
+            border:1px solid #dcdddf;
+            color: white;
+            border-radius: 50%;
+        }
+        .bigCircle{
+            width: 350px;
+            height: 350px;
+            margin-left: -347px;
+            margin-top: 45px;
+            border-radius: 50%;
+            border:1px solid #bdbfc2;
+            z-index: 5;
+            position: absolute;
+            display: inline-block;
+        }
+        .player{
+            margin-top: 42px;
+            margin-left: 40px;
+            width: 590px;
+        }
+        .playerMid,
+        .playerLeft,
+        .playerRight{
+            display: inline-block;
+        }
+        .playerMid{
+            padding-bottom: 17px;
+            width: 370px;
+        }
+        .playerRight{
+            margin-left: 5px;
+        }
+        #playBtn{
+            width: 40px;
+            height: 40px;
+        }
+        .play{
+            background: url(./images/icon1.jpg) -110px 0;
+        }
+        .zan{
+            background: url(./images/icon1.jpg) -207px 0;
+            width: 40px;
+	        height: 40px;
+        }
+        #processBar {
+            float: left;
+            position: relative;
+            width: 360px;
+            height: 4px;
+            margin: 18px 10px 0 0;
+            display: inline;
+        }
+        .processBar {
+            width: 0px;
+            height: 4px;
+            background-color: #ffcd2d;
+        }
+        #wp_bufBar{
+            background-color: #ccc;
+            border-radius: 12px;
+            width: 370px;
+        }
+        .playerMid #wp_processBtn {
+            width: 10px;
+            height: 10px;
+            background: url(./images/icon.png) 0 -128px;
+            position: absolute;
+            top: -3px;
+        }
+        #wp_playTime {
+            float: left;
+            font-size: 12px;
+            color: #ccc;
+            text-align: center;
+        }
+        #wp_mute {
+            width: 20px;
+            height: 16px;
+            background: url(./images/icon1.jpg) no-repeat -45px 0px;
+            margin: 12px 22px 0 41px;
+        }
+        .downLoad{
+            width: 200px;
+            height: 42px;
+            margin: 50px 150px 0 150px;
+        }
+        .downLogo{
+            background: url(./images/icon.png) no-repeat -242px -111px;
+            width: 20px;
+            height: 23px;
+            z-index: 1;
+            margin-left: 19px;
+            margin-top: 9px;
+            position: absolute;
+        }
+        .loadBar{
+            background: url(./images/icon1.jpg) no-repeat 0 -47px;
+            text-align: center;
+            line-height: 42px;
+        }
+        .liveBox{
+            margin-top: 30px;
+            margin-left: 70px;
+            display: flex;
+            flex-direction: row;
+        }
+        .my_img img{
+            width: 55px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .name{
+            font-size: 12px;
+            color: #b9b8c4;
+            margin-bottom: 11px;
+            margin-left: 20px;
+        }
+        .my_comment{
+            width: 226px;
+            height: 48px;
+		    float: left;
+		    position: relative;
+		    padding: 0 0 0 5px;
+            margin-left: 8px;
+        }
+        .square{
+            background-color: #dedeea;
+            border-radius: 4px;
+        }
+        .my_song img{
+            margin-left: 22px;
+            width: 12px;
+            height: 12px;
+        }
+        .song_name{
+            font-size: 12px;
+            color: #9d9ab9;
+            display:inline-block;
+        }
+        .my_song a{
+            margin-left: 47px;
+            font-size: 11px;
+            text-decoration: none;
+            color: #bda7f1;
+        }
+        .triangle{
+            width:0;
+            height:0;
+            border-top:5px solid transparent;
+            border-bottom:5px solid transparent;
+            border-right:5px solid #dedeea;
+            position: absolute;
+            margin-top: 12px;
+            left:0px;
+            top: 6px;
+        }
+        .bottomBox{
+            width: 845px;
+            height: 715px;
+            margin-left: 216px;
+            margin-right: 380px;
+            /* border: 1px solid tomato; */
+        }
+        .com_1{
+            border-bottom: 1px solid #bbb4b4bb;
+            padding-bottom:17px;
+            padding-left: 20px;
+        }
+        .com_1 span:nth-child(1),
+        .com_4 span{
+            font-size: 14px;
+            color: #a9aaa9;
+        }
+        .com_1 span:nth-child(2){
+            font-size: 8px;
+            color: #a9aaa9;
+        }
+        .textBox img{
+            width: 58px;
+            height: 54px;
+            margin-top: 18px;
+            position: absolute;
+        }
+        .textBox textarea{
+            position: absolute;
+            margin-top: 18px;
+            margin-left: 78px;
+            height: 104px;
+            width: 762px;
+            border: 1px solid  #a9aaa9;
+            color: #a9aaa9;
+            font-size: 13px;
+            resize: none;
+            outline: none;
+        }
+        .com_3{
+            margin-top: 140px;
+            margin-left: 78px;
+        }
+        .com_3 span{
+            margin-left: 572px;
+            font-size: 12px;
+            color: #6e726eb7;
+            margin-right: 10px;
+        }
+        .com_3 button{
+            width: 85px;
+            height: 35px;
+            background-color: #f0bc11;
+            color: white;
+            border-radius: 3px;
+            border:2px solid #f0bc11
+        }
+        .com_4{
+            border-bottom: 1px solid #bbb4b4bb;
+            margin-top: 55px;
+            padding-bottom: 17px;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        .changeBox{
+            width: 845px;
+            height: 300px;
+            overflow: hidden;
+        }
+        .one_com,
+        .second_com,
+        .third_com{
+            height: 80px;
+            border-bottom: 1px dashed #acacac;
+            margin-bottom: 20px;
+        }
+        .img_1,
+        .img_2,
+        .img_3{
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
+            position: relative;
+        }
+        .name_1,
+        .name_2,
+        .name_3{
+            color: #deba60;
+            font-size: 14px;
+            width: 42px;
+            height: 20px;
+        }
+        .ns_1,
+        .ns_2,
+        .ns_3{
+            width: 765px;
+            display: inline-block;
+            position: absolute;
+        }
+        .share_1,
+        .share_2,
+        .share_3{
+            float: right;
+            font-size: 13px;
+            opacity: 0.7;
+        }
+        .pinglun{
+            position: absolute;
+            height: 40px;
+            width: 765px;
+            font-size: 13px;
+            display: inline-block;
+            margin-top: 21px;
+            line-height: 40px;
+        }
+        .timeRecord{
+            position: absolute;
+            display: inline-block;
+            width: 635px;
+            height:16px;
+            font-size: 13px;
+            margin-top: 62px;
+            /* line-height: 30px;  */
+        }
+        .right_bottom{
+            float: right;
+            height: 16px;
+            margin-top: 60px;
+            /* line-height: 15px; */
+        }
+        .right_bottom span{
+            font-size: 13px;
+            opacity: 0.7;
+            margin-left: 10px;
+        }
+        .changePages{
+            width: 400px;
+            margin: 30px auto;
+            height: 40px;
+        }
+        .lue{
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            text-align: center;
+            margin-right: 10px;
+        }
+        .page,
+        .pre,
+        .next{
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ededed;
+            border-radius: 50%;
+            display: inline-block;
+            text-align: center;
+            margin-right: 10px;
+            line-height: 40px;
+            background-color: #ededed;
+        }
+        .changePages div:nth-child(1):hover,
+        .changePages div:nth-child(2):hover,
+        .changePages div:nth-child(3):hover,
+        .changePages div:nth-child(4):hover,
+        .changePages div:nth-child(6):hover,
+        .changePages div:nth-child(7):hover {
+            background-color: #ffcd2d;
+        }
+        .page a{
+            padding: 10px;
+        }
+        .page a:hover{
+            color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg">
+        <div class="nav">
+            <div><img src="./images/logo.jpg"></div>
+            <div class="left-nav">
+                <a href="#">首页</a>
+                <a href="#">榜单</a>
+                <a href="#">歌手</a>
+                <a href="#">下载酷我客户端</a>
+            </div>
+            <div class="mid-nav">
+                <div>
+                    <div class="star"></div>
+                    <a href="#">美女秀</a>
+                </div>
+                <div>
+                    <div class="star"></div>
+                    <a href="#">酷我耳机</a>
+                </div>
+                <div>
+                    <div class="star"></div>
+                    <a href="#">VIP会员</a>
+                </div>
+                <div>
+                    <div class="star"></div>
+                    <a href="#">i听</a>
+                </div>
+            </div>
+            <div class="right-nav">
+                <a href="#">更多服务</a>
+                <a href="#">登录</a>
+            </div>
+            <div class="search">
+                <div class="more">
+                    <a href="#">^</a>
+                </div>
+                <img src="./images/search.png"/>
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        <div class="left-box">
+            <div class="name-top">
+                <div class="song-name">
+                    <span>喜羊羊</span>
+                </div>
+                <div>
+                    <span>专辑：</span>
+                    <a href="#">儿歌大全</a>
+                </div>
+                <div>
+                    <span>歌手：</span>
+                    <a href="#">华语群星</a>
+                </div>
+                <div>
+                    <a href="#">分享</a>
+                </div>
+                <div>
+                    <img src="./images/news.jpg">
+                    <a href="#">评论</a>
+                </div>
+                <div>
+                    <span>上传时间:2015-10-02</span>
+                    <span>歌曲来源：民大相思湖网球社</span>
+                </div>
+            </div>
+            <div class="lyric-box">
+                <div>白云因为我变得柔软</div>
+                <div>别看我只是一只羊 </div>
+                <div>羊儿的聪明难以想象</div> 
+                <div>天再高心情一样奔放</div> 
+                <div>每天都追赶太阳</div> 
+                <div>有什么难题 去牵绊我 都不会去心伤</div>
+                <div>有什么危险 在我面前 也不会去慌乱</div>
+                <div>就算有狼群 把我追捕 也当做游戏一场</div>
+                <div>在什么时间 都爱开心 笑容都会飞翔</div>
+                <div>就算会摔倒 站了起来 永远不会沮丧</div>
+                <div>在所有天气 拥有叫人 大笑的力量 </div>
+                <div>虽然我是只羊</div>
+                <div>白云因为我变得柔软</div>
+                <div>别看我只是一只羊 </div>
+                <div>羊儿的聪明难以想象</div> 
+                <div>天再高心情一样奔放</div> 
+                <div>每天都追赶太阳</div> 
+            </div>
+        </div>
+        <div class="right-box">
+            <div class="cover-img">
+                <div class="centerDot"></div>
+                <div class="centerCircle"></div>
+                <div id="yang"></div>
+                <div class="bigCircle"></div>
+            </div>
+            <div class="playerBox">
+                <div class="player">
+                    <audio autoplay="autoplay" id="mymusic">
+                        <source src="./images/1.mp3" type="audio/mp3">
+                    </audio>
+                    <div class="playerLeft">
+                        <div id="playBtn" class="play"></div>
+                    </div>
+                    <div class="playerMid">
+                        <div id="processBar">
+                            <div id="wp_bufBar">
+                              <div class="processBar" id="wp_processBar"></div>
+                              <a href="##" class="schedule_btn" id="wp_processBtn" style="left: 0;"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playerRight">
+                        <p id="wp_playTime" class="opacity">00.00</p>
+                        <div class="sound" id="wp_mute">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="downLoad" >
+                <div class="downLogo"></div>
+                <div class="loadBar">免费下载这首歌</div>
+            </div>
+            <div class="liveBox">
+                <div class="my_img">
+                    <img src="./images/my.jpg">
+                </div>
+                <div class="my_comment">
+                    <div class="triangle"></div>
+                    <div class="square">
+                        <div class="name">裴佳怡——H5班</div>
+                        <div class="my_song">
+                            <img src="./images/gif.gif">
+                            <div class="song_name">喜羊羊与灰太狼</div>
+                            <a href="##">去现场 ></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottomBox">
+        <div class="com_1">
+            <span>评论</span>
+            <span>1703条评论</span>
+        </div>
+        <div class="com_2">
+            <div class="textBox">
+                <img src="./images/my.jpg">
+                <textarea placeholder="分享你的音乐见解" id="text" οnfοcus="this.placeholder=''" οnblur="this.placeholder='分享你的音乐见解'" ></textarea>
+            </div>
+        </div>
+        <div class="com_3">
+            <img src="./images/smile.png">
+            <span>已输入0个字</span>
+            <button class="btn">评论</button>
+        </div>
+        <div class="com_4">
+            <span>精彩评论</span>
+        </div>
+        <div class="changeBox">
+            <div class="page_one">
+                <div class="one_com">
+                    <img src="./images/my.jpg" class="img_1">
+                    <div class="ns_1">
+                        <span class="name_1">裴佳怡</span>
+                        <div class="share_1"><a href="##" >分享</a></div>
+                    </div>
+                    <div class="pinglun" >Too</div>
+                    <div class="timeRecord">2017-06-10 07:00:42</div>
+                    <div class="right_bottom">
+                        <span class="del">删除</span>
+                        <span>163</span>
+                        <img src="./images/like.png">
+                        <span>回复</span>
+                    </div>
+                </div>
+                <div class="second_com">
+                    <img src="./images/def60.jpg" class="img_2">
+                    <div class="ns_2">
+                        <span class="name_2">Forget</span>
+                        <a href="##" class="share_2">分享</a>
+                    </div>
+                    <div class="pinglun">我喜欢很多歌曲，喜欢过很多唱歌的人，那些有时不是我的爱好，已经成为了我那段青春的回忆，我现在可以很骄傲</div>
+                    <div class="timeRecord">2017-06-03 16:58:02</div>
+                    <div class="right_bottom">
+                        <span class="del">删除</span>
+                        <span>149</span>
+                        <img src="./images/like.png">
+                        <span>回复</span>
+                    </div>
+                </div>
+                <div class="third_com">
+                    <img src="./images/def60.jpg" class="img_3">
+                    <div class="ns_3">
+                        <span class="name_3">亚里士多德</span>
+                        <a href="##" class="share_3">分享</a>
+                    </div>
+                    <div class="pinglun">学校晚会表演这歌</div>
+                    <div class="timeRecord">2017-05-14 16:16:53</div>
+                    <div class="right_bottom">
+                        <span class="del">删除</span>
+                        <span>106</span>
+                        <img src="./images/like.png">
+                        <span>回复</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="changePages">
+            <div class="pre"><a href="#"><img src="./images/pre.png"></a></div>
+            <div class="page"><a href="#">1</a></div>
+            <div class="page"><a href="#">2</a></div>
+            <div class="page"><a href="#">3</a></div>
+            <div class="lue">...</div>
+            <div class="page"><a href="#">17</a></div>
+            <div class="next"><a href="#"><img src="./images/next.png"></a></div>
+        </div>
+    </div>
+</body>
+<script>
+    playBtn = document.getElementById("playBtn");
+    processBar = document.getElementById("processBar");
+    wp_processBtn = document.getElementById("wp_processBtn");
+    wp_playTime = document.getElementById("wp_playTime");
+    wp_mute = document.getElementById("wp_mute");
+    yangImg = document.getElementById("yang");
+    btn = document.getElementsByClassName("btn")[0];
+    text = document.getElementById("text")[0];
+    pinglun = document.getElementsByClassName("pinglun");
+    timeRecord = document.getElementsByClassName("timeRecord");
+    changeBox = document.getElementsByClassName("changeBox")[0];
+    page_one = document.getElementsByClassName("page_one")[0];  
+    var myArray = [];
+
+    function progressBar(){
+        var length = mymusic.duration;
+        timer = setInterval(function(){
+            current = mymusic.currentTime;
+            // processBar.style.width = "" + parseFloat(current/length)*370 + "px";
+            wp_processBtn.style.left = "" + parseFloat(current/length)*370 + "px";
+            wp_processBar.style.width = "" + parseFloat(current/length)*370 + "px";
+            wp_processBar.style.backgroundColor = "#ffcd2d";
+        },1000);
+    }
+    function playTimes(){
+        timer1 = setInterval(function(){
+            current = parseInt(mymusic.currentTime);
+            var min = parseInt(current/60);
+            if(min < 10){
+                if(current%60 < 10){
+                    wp_playTime.innerHTML = "0" + min + ":0" + current%60 + "";
+                }else{
+                    wp_playTime.innerHTML = "0" + min + ":" + current%60 + "";
+                }
+            }else{
+                if(current%60 > 10){
+                    wp_playTime.innerText = min + ":0" + current%60 + "";
+                }else{
+                    wp_playTime.innerText = min + ":" + current%60 + "";
+                }
+            }
+        },1000)
+    }
+    playBtn.onclick = function(){
+        if(mymusic.paused){
+            mymusic.play();
+            imgRotate();
+            playBtn.className = "zan";
+            progressBar();
+            playTimes();
+        }
+        else{
+            mymusic.pause();
+            stopRotate();
+            playBtn.className = 'play'
+        }
+    }
+    function imgRotate(){
+        yangImg.style.animation = "record 10s infinite linear";
+    }
+    function stopRotate(){
+        yangImg.style.animationPlayState = "paused";
+    }
+    wp_mute.onclick = function(){
+        if(mymusic.volume != 0){
+            mymusic.volume = 0;
+        }else{
+            mymusic.volume = 1;
+        }
+    }
+    function getDate(str){  
+      var date = new Date(str); 
+      Year = date.getFullYear();  
+      Month = date.getMonth()+1;  
+      Day = date.getDate();  
+      h = date.getHours();
+      m = date.getMinutes();
+      s = date.getSeconds();
+      var Time = Year +'-'+ getZero(Month) +'-' + getZero(Day)+' ' + getZero(h) + ':' +  getZero(m)+ ':' +  getZero(s);
+      return Time;  
+    }
+    function getZero(num){  
+      // 单数前面加0
+      if(parseInt(num) < 10){  
+          num = '0'+ num;  
+      }  
+      return num;  
+    }
+    
+
+    //对评论进行本地存储
+    btn.onclick = function(){
+        data = document.getElementById("text").value;
+        curtime = new Date().getTime();
+        myTime = getDate(curtime);
+        var msg = {
+            comment : data,
+            time : myTime
+        }
+        locStr = JSON.stringify(msg);
+        locMsg = JSON.parse(locStr);
+        myArray.push(locMsg);
+        comment = JSON.stringify(myArray);
+        localStorage.Comment = comment;
+        document.getElementById("text").value = "";
+        //对本地的数据进行读取
+        // addBox();
+        var x = localStorage.getItem("Comment");
+        var strArr = JSON.parse(x);
+        for(i=0; i<strArr.length; i++){
+            pinglun[i].innerHTML = strArr[i].comment;
+            timeRecord[i].innerHTML = strArr[i].time;
+        }
+    }
+    window.onload = function(){
+        var x = localStorage.getItem("Comment");
+        var strArr = JSON.parse(x);
+        for(i=0; i<strArr.length; i++){
+            pinglun[i].innerHTML = strArr[i].comment;
+            timeRecord[i].innerHTML = strArr[i].time;
+        }
+    }
+
+    //添加评论盒子
+    // function addBox(){
+    //     var page_two = document.createElement("div");
+    //     page_two.className = "page_two";
+    //     changeBox.insertBefore(page_two,page_one);
+
+    //     var one_com2 = document.createElement("div");
+    //     one_com2.className = "one_com";
+    //     page_two.appendChild(one_com2);
+
+    //     var img2_1 = document.createElement("img");
+    //     img2_1.src = "./images/my.jpg"
+    //     img2_1.className = "img_1";
+    //     one_com2.appendChild(img2_1);
+
+    //     var ns2_1 = document.createElement("div");
+    //     ns2_1.className = "ns_1";
+    //     one_com2.appendChild(ns2_1);
+
+    //     var name2_1 = document.createElement("span");
+    //     name2_1.className = "name_1";
+    //     name2_1.innerHTML = "裴佳怡";
+    //     ns2_1.appendChild(name2_1);
+
+    //     var share2_1 = document.createElement("div");
+    //     share2_1.className = "share_1";
+    //     ns2_1.appendChild(share2_1);
+
+    //     var a = document.createElement("a");
+    //     a.href = "##";
+    //     a.innerHTML = "分享";
+    //     share2_1.appendChild(a);
+
+    //     var pinglun = document.createElement("div");
+    //     pinglun.className = "pignlun";
+    //     pinglun.style.width = "765px";
+    //     one_com2.appendChild(pinglun);
+
+    //     var timeRecord = document.createElement("div");
+    //     timeRecord.className = "timeRecord";
+    //     timeRecord.style.width = "765px";
+    //     one_com2.appendChild(timeRecord);
+
+    //     var right_bottom = document.createElement('div');
+    //     right_bottom.className = "right_bottom";
+    //     one_com2.appendChild(right_bottom);
+
+    //     var del = document.createElement("span");
+    //     del.className = "del"
+    //     right_bottom.appendChild(del);
+
+    //     var span1 = document.createElement("span");
+    //     span1.innerHTML = "155";
+    //     right_bottom.appendChild(span1);
+
+    //     var img2_2 = document.createElement("img");
+    //     img2_2.src = "./images/like.png"
+    //     right_bottom.appendChild(img2_2);
+
+    //     var span2 = document.createElement("span");
+    //     span2.innerHTML = "回复";
+    //     right_bottom.appendChild(span2);
+    // }
+</script>
+</html>
